@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "wrong_password"; //Palitan bago iexec tnx
 $dbname = "alpha_airconex";
 
 try {
