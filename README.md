@@ -1,8 +1,9 @@
 # airconex
-*sanitazion
+*sanitation
 * transaction
 *  prepare
 
+dito i dedeploy = 
 https://tunnelmole.com/?utm_source=tunnelmoleNet
 
 CRUD - Medium - LARGE
