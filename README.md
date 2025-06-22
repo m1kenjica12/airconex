@@ -16,6 +16,8 @@ JavaScript
 PHP
 MYSQL
 
+-XAMPP, VSCode-
+
 bugs:
 multipe units, wrong count frm wh inventory
 assigned serial column, 1st set of serials gets stored from db received_serial
