@@ -1,31 +1,30 @@
-Inventory Management System
-Stack
+AirconEx
+
+Stack:
 HTML/CSS/JS, PHP, MySQL
+
 XAMPP local, tunnelmole for deployment naman
+
 Critical Issues
 
 Serial persistence: received_serial yung first batch lang nakastore, parang array iteration bug
-Unit assignment: Multiple unit logic is nagiging sira, check mo yung foreign key constraints
+Unit assignment: Multiple unit logic is nagiging sira, check if yung foreign key constraints nga di ko rin sure 
 Count discrepancy: Wrong yung warehouse inventory query on assigned serial joins
 
 Immediate Priority
 
-Materials receiving module (purchasing dept is waiting na eh)
-I-complete yung engineer workflow process
+Materials receiving module 
+I-complete yung project engineer workflow process
 Role-based authentication
 Session management lang
 
 Architecture
-auth -> departments -> inventory -> transactions
-Database Schema
-sqlusers: id, username, hash, role, timestamp
-inventory: id, item, serials, qty, location
-transactions: id, inventory_id, action, qty, user_id, timestamp  
-departments: id, name, workflow_stage
+auth - departments - inventory - transactions
+
 Implementation Notes
 
-Sanitize all inputs ha, use parameterized queries
-Session-based auth with role middleware
+Sanitize all inputs lng, use parameterized queries
+Session-based auth with role 
 Transaction logging for audit trail purposes
 Batch serial number processing with proper validation
 
