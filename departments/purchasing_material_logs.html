@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Purchase Logs - AirconEx</title>
+    <link rel="stylesheet" href="css/purchasing_material_logs.css">
+</head>
+<body>
+  
+    <div class="purchasing-sidebar">
+        <div class="sidebar-header">
+            <h3>Purchasing Department</h3>
+        </div>
+     
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="purchasing_material_order_form.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Material Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_order_form.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Unit Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="purchasing_material_logs.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Material Purchase Logs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_logs.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Unit Purchase Logs</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Purchasing Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+  
+    <div class="main-content">
+        <div class="excel-container">
+           
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>MATERIAL PURCHASE LOGS</h1>
+                    <p>Material Purchase Order History</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Purchase Records</span>
+                    </div>
+                </div>
+            </div>
+
+         
+            <div class="logs-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search PO Number, Supplier...">
+                        <button class="search-btn" onclick="searchOrders()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <input type="date" id="startDate" class="date-filter" placeholder="From Date">
+                        <input type="date" id="endDate" class="date-filter" placeholder="To Date">
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" id="refreshBtn">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportOrders()">
+                            📤 Export
+                        </button>
+                        <button class="action-btn print-btn" onclick="printOrders()">
+                            🖨️ Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="logs-content">
+                <div class="logs-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalOrders">-</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalItems">-</div>
+                        <div class="stat-label">Total Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalAmount">-</div>
+                        <div class="stat-label">Total Amount</div>
+                    </div>
+                </div>
+
+            
+                <div class="table-container">
+                    <table class="logs-table" id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th class="header-cell col-po-number sortable" onclick="sortTable('po_number')">
+                                    PO Number <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-date sortable" onclick="sortTable('po_date')">
+                                    Date <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-supplier sortable" onclick="sortTable('supplier')">
+                                    Supplier <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-items">
+                                    Items
+                                </th>
+                                <th class="header-cell col-total sortable" onclick="sortTable('total_amount')">
+                                    Total Amount <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-actions">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <tr class="loading-row">
+                                <td colspan="6" class="loading-cell">
+                                    <div class="loading-spinner"></div>
+                                    Loading material purchase logs...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 orders</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevPage" onclick="previousPage()" disabled>‹ Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="pagination-btn" id="nextPage" onclick="nextPage()" disabled>Next ›</button>
+                    </div>
+                    <div class="page-size-container">
+                        <label for="pageSize">Orders per page:</label>
+                        <select id="pageSize" class="page-size-select" onchange="changePageSize()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading material purchase logs...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="orderDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Order Details</h3>
+                <button class="modal-close" onclick="closeOrderDetailsModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-info">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>PO Number:</label>
+                            <span id="modalOrderNumber">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Date:</label>
+                            <span id="modalOrderDate">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Supplier:</label>
+                            <span id="modalSupplier">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Remarks:</label>
+                            <span id="modalRemarks">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-items">
+                    <h4>Order Items</h4>
+                    <table class="so-details-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Category</th>
+                                <th>Material</th>
+                                <th>Unit</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderItemsTableBody">
+                            <!-- Items will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="order-summary">
+                    <div class="so-summary">
+                        <p><strong>Total Items:</strong> <span id="modalTotalItems">0</span></p>
+                        <p><strong>Total Quantity:</strong> <span id="modalTotalQuantity">0</span></p>
+                        <p><strong>Total Amount:</strong> <span id="modalTotalAmount">₱0.00</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/purchasing_material_logs.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchasing Unit Logs - AirconEx</title>
+    <link rel="stylesheet" href="css/purchasing_unit_logs.css">
+</head>
+<body>
+ 
+ 
+<div class="sales-sidebar">
+    <div class="sidebar-header">
+        <h3>Purchasing Department</h3>
+    </div>
+    
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="purchasing_material_order_form.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Material Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_order_form.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Unit Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_material_logs.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Material Purchase Logs</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="purchasing_unit_logs.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Unit Purchase Logs</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <span class="user-icon">👤</span>
+            <span class="user-name">Purchasing Employee</span>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">
+            <span class="logout-icon">🚪</span>
+            <span>Log Out</span>
+        </button>
+    </div>
+</div>
+  
+    <div class="main-content">
+        <div class="excel-container">
+           
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>PURCHASING UNIT LOGS</h1>
+                    <p>Unit Purchase History & Tracking</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Purchasing Records</span>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div class="logs-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input filter-input" placeholder="Search PO, DR, Model, Serial...">
+                        <button class="search-btn" onclick="searchLogs()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <label class="filter-label">Supplier:</label>
+                        <select id="supplierFilter" class="filter-select">
+                            <option value="">All Suppliers</option>
+                        </select>
+                    </div>
+                    <div class="filter-section">
+                        <label class="filter-label">Brand:</label>
+                        <select id="brandFilter" class="filter-select">
+                            <option value="">All Brands</option>
+                        </select>
+                    </div>
+                    <div class="filter-section">
+                        <label class="filter-label">Condition:</label>
+                        <select id="conditionFilter" class="filter-select">
+                            <option value="">All Conditions</option>
+                        </select>
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshInventory()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportInventory()">
+                            📤 Export
+                        </button>
+                       
+                    </div>
+                </div>
+            </div>
+
+  
+            <div class="logs-content">
+                <div class="logs-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalItems">-</div>
+                        <div class="stat-label">Total Items</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-number" id="pendingItems">-</div>
+                        <div class="stat-label">Pending Items</div>
+                    </div>
+                    <div class="stat-card scheduled">
+                        <div class="stat-number" id="receivedItems">-</div>
+                        <div class="stat-label">Received Items</div>
+                    </div>
+                    <div class="stat-card monthly">
+                        <div class="stat-number" id="monthlyItems">-</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                </div>
+
+          
+                <div class="table-container">
+                    <table class="inventory-table" id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th class="header-cell col-so-number sortable" onclick="sortTable('po_number')">
+                                    PO Number <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-book-date sortable" onclick="sortTable('po_date')">
+                                    Date PO <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-install-date sortable" onclick="sortTable('received_date')">
+                                    Date Received <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-store sortable" onclick="sortTable('dr_number')">
+                                    DR No <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-client-name sortable" onclick="sortTable('supplier_name')">
+                                    Supplier Name <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-store sortable" onclick="sortTable('brand')">
+                                    Brand <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-quantity sortable" onclick="sortTable('horsepower')">
+                                    Horsepower <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-quantity sortable" onclick="sortTable('quantity')">
+                                    Quantity <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-app-type sortable" onclick="sortTable('series')">
+                                    Series <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-scope sortable" onclick="sortTable('type')">
+                                    Type <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-payment sortable" onclick="sortTable('model')">
+                                    Model <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-scheme sortable" onclick="sortTable('serial')">
+                                    Serial <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-status sortable" onclick="sortTable('condition')">
+                                    Condition <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-remarks">
+                                    Model & Serials
+                                </th>
+                                <th class="header-cell col-unit-price sortable" onclick="sortTable('unit_price')">
+                                    Unit Price <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-total-unit-price sortable" onclick="sortTable('total_unit_price')">
+                                    Total Unit Price <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-status sortable" onclick="sortTable('status')">
+                                    Status <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-action">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr class="loading-row">
+                                <td colspan="18" class="loading-cell">
+                                    <div class="loading-spinner"></div>
+                                    Loading purchasing unit logs...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+           
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 items</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevBtn" onclick="previousPage()" disabled>‹ Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="pagination-btn" id="nextBtn" onclick="nextPage()" disabled>Next ›</button>
+                    </div>
+                    <div class="page-size-container">
+                        <label for="pageSize">Items per page:</label>
+                        <select id="pageSize" class="page-size-select" onchange="changePageSize()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+    
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading purchasing unit logs...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/purchasing_unit_logs.js"></script>
+</body>
+</html>

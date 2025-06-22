@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Logs - AirconEx</title>
+    <link rel="stylesheet" href="css/sales_order_logs.css">
+</head>
+<body>
+  
+    <div class="sales-sidebar">
+        <div class="sidebar-header">
+            <h3>Sales Department</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="sales_order_form.html" class="nav-link">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-text">Sales Order Form</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="sales_unit_inventory.html" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Unit Inventory</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="sales_order_logs.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Sales Logs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Sales Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+    
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>SALES ORDER LOGS</h1>
+                    <p>Sales Transaction History</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Sales Records</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="logs-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search SO Number, Client Name, Store...">
+                        <button class="search-btn" onclick="searchLogs()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <select id="storeFilter" class="filter-select">
+                            <option value="">All Stores</option>
+                        </select>
+                        <select id="accountFilter" class="filter-select">
+                            <option value="">All Accounts</option>
+                        </select>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="For Request">For Request</option>
+                            <option value="For Schedule">For Schedule</option>
+                        </select>
+                        <input type="date" id="dateFromFilter" class="date-filter" placeholder="From Date">
+                        <input type="date" id="dateToFilter" class="date-filter" placeholder="To Date">
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshLogs()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportLogs()">
+                            📤 Export
+                        </button>
+                        <button class="action-btn print-btn" onclick="printLogs()">
+                            🖨️ Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="logs-content">
+                <div class="logs-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalOrders">-</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-number" id="pendingOrders">-</div>
+                        <div class="stat-label">For Request</div>
+                    </div>
+                    <div class="stat-card scheduled">
+                        <div class="stat-number" id="scheduledOrders">-</div>
+                        <div class="stat-label">For Schedule</div>
+                    </div>
+                    <div class="stat-card monthly">
+                        <div class="stat-number" id="monthlyOrders">-</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                </div>
+
+             
+                <div class="table-container">
+                    <table class="logs-table" id="logsTable">
+                        <thead>
+                            <tr>
+                                <th class="header-cell col-so-number sortable" onclick="sortTable('so_number')">
+                                    SO Number <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-store sortable" onclick="sortTable('store')">
+                                    Store <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-store-code sortable" onclick="sortTable('store_code')">
+                                    Store Code <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-account sortable" onclick="sortTable('account')">
+                                    Account <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-status sortable" onclick="sortTable('status')">
+                                    Status <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-book-date sortable" onclick="sortTable('book_date')">
+                                    Book Date <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-install-date sortable" onclick="sortTable('installation_date')">
+                                    Installation Date <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-month sortable" onclick="sortTable('month')">
+                                    Month <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-client-type sortable" onclick="sortTable('client_type')">
+                                    Client Type <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-client-name sortable" onclick="sortTable('client_name')">
+                                    Client Name <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-address">
+                                    Address
+                                </th>
+                                <th class="header-cell col-city sortable" onclick="sortTable('city_province')">
+                                    City/Province <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-contact">
+                                    Contact
+                                </th>
+                                <th class="header-cell col-app-type sortable" onclick="sortTable('application_type')">
+                                    Application Type <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-scope sortable" onclick="sortTable('scope_of_work')">
+                                    Scope of Work <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-quantity">
+                                    Quantity
+                                </th>
+                                <th class="header-cell col-payment sortable" onclick="sortTable('mode_of_payment')">
+                                    Payment Mode <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-scheme sortable" onclick="sortTable('scheme')">
+                                    Scheme <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-remarks">
+                                    Remarks
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTableBody">
+                            <tr class="loading-row">
+                                <td colspan="19" class="loading-cell">
+                                    <div class="loading-spinner"></div>
+                                    Loading sales logs...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 orders</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevBtn" onclick="previousPage()" disabled>‹ Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="pagination-btn" id="nextBtn" onclick="nextPage()" disabled>Next ›</button>
+                    </div>
+                    <div class="page-size-container">
+                        <label for="pageSize">Orders per page:</label>
+                        <select id="pageSize" class="page-size-select" onchange="changePageSize()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading sales logs...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/sales_order_logs.js"></script>
+</body>
+</html>

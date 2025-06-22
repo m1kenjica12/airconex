@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Department - AirconEx</title>
+    <link rel="stylesheet" href="css/sales_order_form.css">
+</head>
+<body>
+
+    <div class="sales-sidebar">
+        <div class="sidebar-header">
+            <h3>Sales Department</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="sales_order_form.html" class="nav-link">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-text">Sales Order Form</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="sales_unit_inventory.html" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Unit Inventory</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="sales_order_logs.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Sales Logs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Sales Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+         
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>NEW SALES ORDER</h1>
+                   
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Order Form</span>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="form-content">
+                <form id="excelForm" method="POST" action="api/sales_order_submit.php">
+                 
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>1. STORE INFORMATION</h3>
+                        </div>
+                        <table class="excel-table four-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-1">Store</th>
+                                    <th class="header-cell col-2">Store Code</th>
+                                    <th class="header-cell col-3">Account</th>
+                                    <th class="header-cell col-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="required-cell col-1">
+                                        <select name="store" class="excel-select" required>
+                                            <option value="">Select Store</option>
+                                            <option value="API">API</option>
+                                            <option value="API 2 TUGUE">API 2 TUGUE</option>
+                                            <option value="TAS 1">TAS 1</option>
+                                            <option value="TAS 2">TAS 2</option>
+                                            <option value="TAS 3">TAS 3</option>
+                                            <option value="TAS 4">TAS 4</option>
+                                            <option value="TAS 5">TAS 5</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-2">
+                                        <input type="text" name="store_code" class="excel-input" readonly>
+                                    </td>
+                                    <td class="required-cell col-3">
+                                        <select name="account" class="excel-select" required>
+                                            <option value="">Select Account</option>
+                                            <option value="Project">Project</option>
+                                            <option value="Retail">Retail</option>
+                                            <option value="Subdealer">Subdealer</option>
+                                            <option value="Transfer">Transfer</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-4">
+                                        <select name="project_status" class="excel-select">
+                                            <option value="For Request">For Request</option>
+                                            <option value="For Schedule">For Schedule</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                   
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>2. SCHEDULE INFORMATION</h3>
+                        </div>
+                        <table class="excel-table three-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-1">Book Date</th>
+                                    <th class="header-cell col-2">Installation Date</th>
+                                    <th class="header-cell col-3">Month</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                        <input type="date" name="book_date" class="excel-input" id="bookDate">
+                                    </td>
+                                    <td class="col-2">
+                                        <input type="date" name="installation_date" class="excel-input" id="installationDate">
+                                    </td>
+                                    <td class="col-3">
+                                        <input type="text" name="month" class="excel-input" id="monthInput" readonly placeholder="Auto-filled from installation date">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+       
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>3. CLIENT INFORMATION</h3>
+                        </div>
+                        <table class="excel-table four-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-1">Client Type</th>
+                                    <th class="header-cell col-2">Client Name</th>
+                                    <th class="header-cell col-3">Contact Number</th>
+                                    <th class="header-cell col-4">City & Province</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                        <select name="client_type" class="excel-select">
+                                            <option value="FB">FB</option>
+                                            <option value="FB Boost">FB Boost</option>
+                                            <option value="IG">IG</option>
+                                            <option value="Key Account">Key Account</option>
+                                            <option value="Referral">Referral</option>
+                                            <option value="Repeat Customer">Repeat Customer</option>
+                                            <option value="Saturate">Saturate</option>
+                                            <option value="Store Walk-in">Store Walk-in</option>
+                                            <option value="Tiktok">Tiktok</option>
+                                        </select>
+                                    </td>
+                                    <td class="required-cell col-2">
+                                        <input type="text" name="client_name" class="excel-input" required maxlength="255">
+                                    </td>
+                                    <td class="required-cell col-3">
+                                        <input type="tel" name="contact_number" class="excel-input" required>
+                                    </td>
+                                    <td class="required-cell col-4">
+                                        <input type="text" name="city_province" class="excel-input" required>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="excel-table single-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-full">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="required-cell col-full">
+                                        <textarea name="address" class="excel-textarea multi-row" placeholder="Complete address" required></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                  
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>4. PROJECT DETAILS</h3>
+                        </div>
+                        <table class="excel-table two-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-1">Application Type</th>
+                                    <th class="header-cell col-2">Scope of Work</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                        <select name="application_type" class="excel-select">
+                                            <option value="Church">Church</option>
+                                            <option value="Clinic Hospital">Clinic Hospital</option>
+                                            <option value="Commercial">Commercial</option>
+                                            <option value="Multi-Use Building">Multi-Use Building</option>
+                                            <option value="Office">Office</option>
+                                            <option value="Residential">Residential</option>
+                                            <option value="Restaurants">Restaurants</option>
+                                            <option value="School University">School University</option>
+                                            <option value="Sport Complex / Arena">Sport Complex / Arena</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-2">
+                                        <select name="scope_of_work" class="excel-select">
+                                            <option value="Basic Installation">Basic Installation</option>
+                                            <option value="Dismantling">Dismantling</option>
+                                            <option value="Ducting Works">Ducting Works</option>
+                                            <option value="Freebies">Freebies</option>
+                                            <option value="Installation Only">Installation Only</option>
+                                            <option value="OSM Installation">OSM Installation</option>
+                                            <option value="Project">Project</option>
+                                            <option value="Semi Project">Semi Project</option>
+                                            <option value="Supply">Supply</option>
+                                            <option value="Survey and Installation">Survey and Installation</option>
+                                            <option value="Relocation">Relocation</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                  
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>5. UNIT SELECTION</h3>
+                        </div>
+                        <table class="excel-table product-table" id="productTable">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-qty">Quantity</th>
+                                    <th class="header-cell col-brand">Brand</th>
+                                    <th class="header-cell col-unit">Unit Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody">
+                                <tr class="product-row" data-row="1">
+                                    <td class="col-qty text-center">
+                                        <input type="number" name="products[1][quantity]" class="excel-input text-center" min="1" max="20" placeholder="1" value="1">
+                                    </td>
+                                    <td class="col-brand">
+                                        <select name="products[1][brand]" class="excel-select">
+                                            <option value="">Loading brands...</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-unit">
+                                        <select name="products[1][unit_description]" class="excel-select">
+                                            <option value="">Loading units...</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="product-controls">
+                            <button type="button" class="product-control-btn" onclick="addProductRow()">
+                                + Add Unit
+                            </button>
+                            <button type="button" class="product-control-btn btn-remove" onclick="removeLastProductRow()">
+                                - Remove Unit
+                            </button>
+                            <span style="margin-left: 10px; font-size: 9px; color: #666;">
+                                Products: <span id="productCount">1</span> / 20 max
+                            </span>
+                        </div>
+                    </div>
+
+               
+                    <div class="excel-section">
+                        <div class="section-header">
+                            <h3>6. PAYMENT INFORMATION</h3>
+                        </div>
+                        <table class="excel-table three-col-table">
+                            <thead>
+                                <tr>
+                                    <th class="header-cell col-1">Mode of Payment</th>
+                                    <th class="header-cell col-2">Scheme</th>
+                                    <th class="header-cell col-3">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-1">
+                                        <select name="mode_of_payment" class="excel-select">
+                                            <option value="Cash" selected>Cash</option>
+                                            <option value="Credit Card">Credit Card</option>
+                                            <option value="Home Credit">Home Credit</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-2">
+                                        <select name="scheme" class="excel-select">
+                                            <option value="3 Months">3 Months</option>
+                                            <option value="6 Months">6 Months</option>
+                                            <option value="9 Months">9 Months</option>
+                                            <option value="12 Months">12 Months</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-3">
+                                        <textarea name="remarks" class="excel-textarea" placeholder="Additional notes" maxlength="1000"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+      
+            <div class="excel-buttons">
+                <div class="button-group">
+                    <button type="button" class="excel-btn btn-clear" onclick="clearForm()">
+                        Clear Form
+                    </button>
+                    <button type="submit" form="excelForm" class="excel-btn btn-submit">
+                        Submit Order
+                    </button>
+                </div>
+            </div>
+
+           
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading products...</span>
+                    <span id="fieldCount">0 fields completed</span>
+                    <span>Form Version 2.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sales_order_form.js"></script>
+</body>
+</html>

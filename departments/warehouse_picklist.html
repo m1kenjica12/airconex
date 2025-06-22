@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Pick List - AirconEx</title>
+    <link rel="stylesheet" href="css/warehouse_picklist.css">
+</head>
+<body>
+
+    <div class="warehouse-sidebar">
+        <div class="sidebar-header">
+            <h3>Warehouse Department</h3>
+        </div>
+ 
+
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="warehouse_receiving.html" class="nav-link">
+                <span class="nav-icon">📥</span>
+                <span class="nav-text">Warehouse Receiving</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_dispatch.html" class="nav-link">
+                <span class="nav-icon">🚚</span>
+                <span class="nav-text">Warehouse Dispatch</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_units_inventory.html" class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Units Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_materials_inventory.html" class="nav-link">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-text">Materials Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="warehouse_picklist.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pick List</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_delivery_receipt_units.html" class="nav-link">
+                <span class="nav-icon">🧾</span>
+                <span class="nav-text">Delivery Receipt</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Warehouse Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+           
+            <div class="picklist-header">
+                <div class="header-title">
+                    <h1>Warehouse Pick List</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn print-btn" onclick="printPickList()">
+                        🖨️ Print
+                    </button>
+                    <button class="action-btn refresh-btn" onclick="refreshPickList()">
+                        🔄 Refresh
+                    </button>
+                </div>
+            </div>
+
+     
+            <div class="date-controls">
+                <div class="date-section">
+                    <label for="installationDate" class="date-label">Installation Date:</label>
+                    <input type="date" id="installationDate" class="date-input" value="">
+                    <button class="load-btn" onclick="loadPickList()">
+                        📋 Load Pick List
+                    </button>
+                </div>
+            </div>
+
+    
+            <div class="picklist-content">
+         
+                <div class="loading-container" id="loadingContainer" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Loading pick list data...</p>
+                </div>
+                
+              
+                <div class="empty-picklist" id="emptyPicklist">
+                    <div class="empty-message">
+                        <span class="empty-icon">📋</span>
+                        <h3>No pick list available for this date.</h3>
+                        <p>Please select an installation date to load the pick list.</p>
+                    </div>
+                </div>
+
+              
+                <div class="picklist-orders-container" id="picklistOrdersContainer" style="display: none;">
+               
+                </div>
+            </div>
+
+         
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Ready to load pick list</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/warehouse_picklist.js"></script>
+</body>
+</html>

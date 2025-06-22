@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispatch Management - AirconEx</title>
+    <link rel="stylesheet" href="css/warehouse_dispatch.css">
+</head>
+<body>
+
+    <div class="sales-sidebar">
+        <div class="sidebar-header">
+            <h3>Warehouse Department</h3>
+        </div>
+   
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="warehouse_receiving.html" class="nav-link">
+                <span class="nav-icon">📥</span>
+                <span class="nav-text">Warehouse Receiving</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="warehouse_dispatch.html" class="nav-link">
+                <span class="nav-icon">🚚</span>
+                <span class="nav-text">Warehouse Dispatch</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_units_inventory.html" class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Units Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_materials_inventory.html" class="nav-link">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-text">Materials Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_picklist.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pick List</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_delivery_receipt_units.html" class="nav-link">
+                <span class="nav-icon">🧾</span>
+                <span class="nav-text">Delivery Receipt</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Warehouse Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+       
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>DISPATCH MANAGEMENT</h1>
+                    <p>Serial Assignment & Dispatch Tracking</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Dispatch Records</span>
+                    </div>
+                </div>
+            </div>
+
+      
+            <div class="dispatch-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search SO Number, Client, Unit, Serial...">
+                        <button class="search-btn" onclick="searchDispatch()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="Pending ">Pending </option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="Ready to Dispatch">Ready to Dispatch</option>
+                            <option value="Dispatched">Dispatched</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                        <select id="assignmentFilter" class="filter-select">
+                            <option value="">All Assignments</option>
+                            <option value="Not Assigned">Not Assigned</option>
+                            <option value="Assigned">Assigned</option>
+                        </select>
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshDispatch()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportDispatch()">
+                            📤 Export
+                        </button>
+                       
+                    </div>
+                </div>
+            </div>
+
+         
+            <div class="dispatch-content">
+                <div class="dispatch-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalItems">-</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-number" id="pendingItems">-</div>
+                        <div class="stat-label">Pending  </div>
+                    </div>
+                    <div class="stat-card assigned">
+                        <div class="stat-number" id="assignedItems">-</div>
+                        <div class="stat-label">Assigned</div>
+                    </div>
+                    <div class="stat-card dispatched">
+                        <div class="stat-number" id="dispatchedItems">-</div>
+                        <div class="stat-label">Dispatched</div>
+                    </div>
+                </div>
+
+          
+                <div class="table-container">
+                    <table class="dispatch-table" id="dispatchTable">
+                        <thead>
+                            <tr>
+                                <th class="header-cell col-date sortable" onclick="sortTable('date')">
+                                    Date <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-so-number sortable" onclick="sortTable('so_number')">
+                                    SO Number <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-client sortable" onclick="sortTable('client')">
+                                    Client <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-unit-description sortable" onclick="sortTable('unit_description')">
+                                    Unit Description <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-model sortable" onclick="sortTable('model')">
+                                    Model <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-assigned-serial sortable" onclick="sortTable('assigned_serial')">
+                                    Assigned Serial <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-serial-assignment sortable" onclick="sortTable('serial_assignment')">
+                                    Serial Assignment <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-status sortable" onclick="sortTable('status')">
+                                    Status <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-action">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="dispatchTableBody">
+                            <tr class="loading-row">
+                                <td colspan="9" class="loading-cell">
+                                    <div class="loading-spinner"></div>
+                                    Loading dispatch records...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 orders</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevBtn" onclick="previousPage()" disabled>‹ Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="pagination-btn" id="nextBtn" onclick="nextPage()" disabled>Next ›</button>
+                    </div>
+                    <div class="page-size-container">
+                        <label for="pageSize">Orders per page:</label>
+                        <select id="pageSize" class="page-size-select" onchange="changePageSize()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading dispatch records...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="serialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Assign Serial Number</h3>
+                <button class="modal-close" onclick="closeSerialModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="serialForm">
+                    <div class="form-group">
+                        <label for="serialSelect">Available Serials from PO:</label>
+                        <select id="serialSelect" class="form-control" onchange="handleSerialSelect()">
+                            <option value="">Loading available serials...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="serialNumber">Serial Number:</label>
+                        <input type="text" id="serialNumber" name="serialNumber" required>
+                        <small class="form-text">Select from dropdown above or enter custom serial</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentDate">Assignment Date:</label>
+                        <input type="date" id="assignmentDate" name="assignmentDate" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeSerialModal()">Cancel</button>
+                        <button type="submit" class="btn-submit">Assign Serial</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dispatchModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Dispatch Unit</h3>
+                <button class="modal-close" onclick="closeDispatchModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="dispatchForm">
+                    <div class="form-group">
+                        <label for="dispatchDate">Dispatch Date:</label>
+                        <input type="date" id="dispatchDate" name="dispatchDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courier">Courier/Driver:</label>
+                        <input type="text" id="courier" name="courier" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trackingNumber">Tracking Number:</label>
+                        <input type="text" id="trackingNumber" name="trackingNumber">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeDispatchModal()">Cancel</button>
+                        <button type="submit" class="btn-submit">Dispatch</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/warehouse_dispatch.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Receipt Generator - AirconEx</title>
+    <link rel="stylesheet" href="css/warehouse_delivery_receipt.css">
+</head>
+<body>
+   
+    <div class="sales-sidebar">
+        <div class="sidebar-header">
+            <h3>Warehouse Department</h3>
+        </div>
+    
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="warehouse_receiving.html" class="nav-link">
+                <span class="nav-icon">📥</span>
+                <span class="nav-text">Warehouse Receiving</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_dispatch.html" class="nav-link">
+                <span class="nav-icon">🚚</span>
+                <span class="nav-text">Warehouse Dispatch</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_units_inventory.html" class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Units Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_materials_inventory.html" class="nav-link">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-text">Materials Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_picklist.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pick List</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="warehouse_delivery_receipt_units.html" class="nav-link">
+                <span class="nav-icon">🧾</span>
+                <span class="nav-text">Delivery Receipt</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Warehouse Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+     
+            <div class="dr-header">
+                <div class="header-title">
+                    <h1>Delivery Receipt Generator</h1>
+                </div>
+            </div>
+
+            <div class="dr-controls">
+                <div class="control-row">
+                    <div class="so-section">
+                        <label for="soNumber" class="so-label">Enter SO Number:</label>
+                        <input type="text" id="soNumber" class="so-input" placeholder="e.g., SO06-25-0001">
+                        <button class="load-btn" onclick="loadReceipt()">
+                            🔍 Load Receipt
+                        </button>
+                        <button class="print-btn" onclick="printReceipt()">
+                            🖨️ Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+         
+            <div class="dr-content">
+              
+                <div class="loading-container" id="loadingContainer" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Loading delivery receipt...</p>
+                </div>
+                
+           
+                <div class="empty-dr" id="emptyDR">
+                    <div class="empty-message">
+                        <span class="empty-icon">🧾</span>
+                        <h3>No delivery receipt loaded.</h3>
+                        <p>Please enter an SO number to generate the delivery receipt.</p>
+                    </div>
+                </div>
+
+      
+                <div class="dr-form-container" id="drFormContainer" style="display: none;">
+                    <div class="dr-form">
+                  
+                        <div class="company-header">
+                            <div class="company-logo">
+                                <svg width="100" height="60" viewBox="0 0 100 60">
+                                    <polygon points="10,50 30,10 50,50" fill="#DAA520" stroke="#B8860B" stroke-width="2"/>
+                                    <polygon points="20,40 30,20 40,40" fill="#FFF" stroke="#DAA520" stroke-width="1"/>
+                                   
+                                </svg>
+                            </div>
+                            <div class="company-info">
+                                <h1 class="company-name">AirconEx</h1>
+                                <p class="company-tagline">PHILIPPINES, INC.</p>
+                                <div class="company-address">
+                                    <span>📍 Lot 11-A 6 Eusebio Avenue, San Miguel Pasig City</span><br>
+                                    <span>📍 115 A. Bonifacio St. Centro 6 Tuguegarao City, Cagayan</span>
+                                </div>
+                                <p class="company-contact">📧 inquiry@airconexph.com</p>
+                            </div>
+                            <div class="dr-title-section">
+                                <h2 class="dr-title">DELIVERY RECEIPT</h2>
+                                <div class="dr-number" id="drNumber">SO01-12258</div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="dr-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Date:</span>
+                                <span class="detail-value" id="drDate">#REF!</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">SO Number:</span>
+                                <span class="detail-value" id="drSONumber">#REF!</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Client Name:</span>
+                                <span class="detail-value" id="drClientName">#REF!</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value" id="drAddress"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Contact Number:</span>
+                                <span class="detail-value" id="drContact"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Scope of Work:</span>
+                                <span class="detail-value" id="drScope"></span>
+                            </div>
+                        </div>
+
+                      
+                        <div class="items-section">
+                            <table class="items-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-number">#</th>
+                                        <th class="col-description">ITEM DESCRIPTION</th>
+                                        <th class="col-serial">SERIAL NUMBER</th>
+                                        <th class="col-qty">QUANTITY</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="drItemsBody">
+                                    <tr class="item-row">
+                                        <td class="item-number">#REF!</td>
+                                        <td class="item-description">#REF!</td>
+                                        <td class="item-serial">#REF!</td>
+                                        <td class="item-qty">#REF!</td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                    <tr class="item-row empty-row">
+                                        <td class="item-number"></td>
+                                        <td class="item-description"></td>
+                                        <td class="item-serial"></td>
+                                        <td class="item-qty"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                       
+                            <div class="nothing-follows">
+                                <strong>*NOTHING FOLLOWS*</strong>
+                            </div>
+                        </div>
+
+                  
+                        <div class="empty-space"></div>
+
+              
+                        <div class="signatures-section">
+                            <div class="signature-row">
+                                <div class="signature-field">
+                                    <label>Prepared By:</label>
+                                    <div class="prepared-by">THOMAS NUQUI JR</div>
+                                    <div class="signature-line"></div>
+                                    <span class="signature-label">Signature over Printed Name</span>
+                                </div>
+                                <div class="signature-field">
+                                    <label>Delivered By:</label>
+                                    <div class="signature-line"></div>
+                                    <span class="signature-label">Signature over Printed Name</span>
+                                </div>
+                            </div>
+                            <div class="signature-row">
+                                <div class="signature-field">
+                                    <label>Verified By:</label>
+                                    <div class="signature-line"></div>
+                                    <span class="signature-label">Signature over Printed Name</span>
+                                </div>
+                                <div class="signature-field">
+                                    <label>Received By:</label>
+                                    <div class="signature-line"></div>
+                                    <span class="signature-label">Signature over Printed Name</span>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+                        <div class="copy-info">
+                            <p>Guard Copy - Yellow / Blue - Client Copy / Pink - Service Copy / White - Accouting Copy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Ready to generate delivery receipt</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/warehouse_delivery_receipt.js"></script>
+</body>
+</html>

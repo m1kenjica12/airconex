@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order Form - AirconEx</title>
+    <link rel="stylesheet" href="css/purchasing_unit_order_form.css">
+</head>
+<body>
+
+    <div class="purchasing-sidebar">
+        <div class="sidebar-header">
+            <h3>Purchasing Department</h3>
+        </div>
+
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="purchasing_material_order_form.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Material Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="purchasing_unit_order_form.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Unit Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_material_logs.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Material Purchase Logs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_logs.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Unit Purchase Logs</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Purchasing Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+          
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>UNIT ORDER FORM</h1>
+                    <p>Create New Purchase Order</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>New Purchase Order</span>
+                    </div>
+                </div>
+            </div>
+
+       
+            <div class="form-container">
+                <form id="purchaseOrderForm" class="purchase-order-form">
+             
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Order Information</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="poDate">PO Date</label>
+                                <input type="date" id="poDate" name="poDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Supplier</label>
+                                <select id="supplier" name="supplier" class="form-select" required>
+                                    <option value="">Select Supplier</option>
+                                    <option value="DAIKIN">DAIKIN</option>
+                                    <option value="CARRIER">CARRIER</option>
+                                    <option value="MIDEA">MIDEA</option>
+                                    <option value="KOPPEL">KOPPEL</option>
+                                    <option value="PANASONIC">PANASONIC</option>
+                                    <option value="SAMSUNG">SAMSUNG</option>
+                                    <option value="HITACHI">HITACHI</option>
+                                    <option value="MIT AIR">MIT AIR</option>
+                                    <option value="AUX">AUX</option>
+                                    <option value="TCL">TCL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+               
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Products</h3>
+                            <div class="product-counter">
+                                <span id="totalUnits">Total Units: 0</span>
+                            </div>
+                        </div>
+
+                      
+                        <div class="products-container">
+                            <table class="products-table" id="productsTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-brand">Brand</th>
+                                        <th class="col-hp">HP</th>
+                                        <th class="col-series">Series</th>
+                                        <th class="col-type">Type</th>
+                                        <th class="col-model">Model</th>
+                                        <th class="col-qty">Qty</th>
+                                        <th class="col-unit-price">Unit Price</th>
+                                        <th class="col-action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productsTableBody">
+                                    <tr class="product-row" data-row="1">
+                                        <td class="col-brand">
+                                            <select name="brand[]" class="form-select brand-select" onchange="updateProductOptions(this, 1)" required>
+                                                <option value="">Select Brand</option>
+                                                <option value="AUX">AUX</option>
+                                                <option value="GREE">GREE</option>
+                                                <option value="MIDEA">MIDEA</option>
+                                                <option value="CARRIER">CARRIER</option>
+                                                <option value="DAIKIN">DAIKIN</option>
+                                                <option value="LG">LG</option>
+                                                <option value="SAMSUNG">SAMSUNG</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-hp">
+                                            <select name="hp[]" class="form-select hp-select" onchange="updateProductOptions(this, 1)" required>
+                                                <option value="">Select HP</option>
+                                               
+                                            </select>
+                                        </td>
+                                        <td class="col-series">
+                                            <select name="series[]" class="form-select series-select" onchange="updateProductOptions(this, 1)" required>
+                                                <option value="">Select Series</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-type">
+                                            <select name="type[]" class="form-select type-select" onchange="updateProductOptions(this, 1)" required>
+                                                <option value="">Select Type</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-model">
+                                            <input type="text" name="model[]" class="form-input model-input" placeholder="Auto-filled" readonly>
+                                        </td>
+                                        <td class="col-qty">
+                                            <input type="number" name="quantity[]" class="form-input qty-input" value="1" min="1" onchange="updateTotalUnits()" required>
+                                        </td>
+                                        <td class="col-unit-price">
+                                            <input type="text" name="unit_price[]" class="form-input unit-price-input" placeholder="0.00" required>
+                                        </td>
+                                        <td class="col-action">
+                                            <button type="button" class="btn-remove" onclick="removeProductRow(1)" disabled>🗑️</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                
+                        <div class="add-product-section">
+                            <button type="button" class="btn-add-product" onclick="addProductRow()">
+                                <span class="add-icon">➕</span>
+                                Add Unit
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Remarks</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="remarks">Notes</label>
+                                <textarea id="remarks" name="remarks" rows="4" placeholder="Notes..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                    <div class="form-actions">
+                       
+                       
+                        <button type="submit" class="btn-primary">
+                            Submit Purchase Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Ready to create purchase order</span>
+                    <span id="lastSaved">Last saved: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Purchase Order Submitted</h3>
+                <button class="modal-close" onclick="closeSuccessModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h4>Purchase Order Created Successfully!</h4>
+                  
+                    <div class="order-details">
+                        <p><strong>PO Number:</strong> <span id="generatedPONumber">-</span></p>
+                        <p><strong>Date:</strong> <span id="orderDate">-</span></p>
+                        <p><strong>Total Items:</strong> <span id="totalItems">-</span></p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeSuccessModal()">Close</button>
+                    <button type="button" class="btn-primary" onclick="createNewOrder()">Create New Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/purchasing_order_form.js"></script>
+</body>
+</html>

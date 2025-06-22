@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Order Form - AirconEx</title>
+    <link rel="stylesheet" href="css/purchasing_material_order_form.css">
+</head>
+<body>
+
+    <div class="purchasing-sidebar">
+        <div class="sidebar-header">
+            <h3>Purchasing Department</h3>
+        </div>
+      
+
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item active">
+            <a href="purchasing_material_order_form.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Material Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_order_form.html" class="nav-link">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Unit Order Form</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_material_logs.html" class="nav-link">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Material Purchase Logs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="purchasing_unit_logs.html" class="nav-link">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Unit Purchase Logs</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Purchasing Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+        
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>MATERIAL ORDER FORM</h1>
+                    <p>Create New Material Order</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>New Material Order</span>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="form-container">
+                <form id="materialOrderForm" class="purchase-order-form">
+                
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Order Information</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="poDate">PO Date</label>
+                                <input type="date" id="poDate" name="poDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Supplier</label>
+                                <select id="supplier" name="supplier" class="form-select" required>
+                                    <option value="">Select Supplier</option>
+                                    <option value="ACE HARDWARE">ACE HARDWARE</option>
+                                    <option value="WILCON DEPOT">WILCON DEPOT</option>
+                                    <option value="HOME DEPOT">HOME DEPOT</option>
+                                    <option value="HANDYMAN">HANDYMAN</option>
+                                    <option value="TRUE VALUE">TRUE VALUE</option>
+                                    <option value="CITI HARDWARE">CITI HARDWARE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Materials</h3>
+                            <div class="product-counter">
+                                <span id="totalItems">Total Items: 0</span>
+                            </div>
+                        </div>
+
+                        <div class="products-container">
+                            <table class="products-table" id="materialsTable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-category">Category</th>
+                                        <th class="col-material">Material</th>
+                                        <th class="col-unit">UOM</th>
+                                        <th class="col-qty">Qty</th>
+                                        <th class="col-unit-price">Unit Price</th>
+                                        <th class="col-action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="materialsTableBody">
+                                    <tr class="material-row" data-row="1">
+                                        <td class="col-category">
+                                            <select name="category[]" class="form-select category-select" onchange="updateMaterialOptions(this, 1)" required>
+                                                <option value="">Select Category</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-material">
+                                            <select name="material[]" class="form-select material-select" onchange="updateMaterialOptions(this, 1)" required disabled>
+                                                <option value="">Select Material</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-unit">
+                                            <select name="unit[]" class="form-select unit-select" required disabled>
+                                                <option value="">Select UOM</option>
+                                            </select>
+                                        </td>
+                                        <td class="col-qty">
+                                            <input type="number" name="quantity[]" class="form-input qty-input" value="1" min="1" onchange="updateTotalItems()" required>
+                                        </td>
+                                        <td class="col-unit-price">
+                                            <input type="text" name="unit_price[]" class="form-input unit-price-input" placeholder="0.00" required>
+                                        </td>
+                                        <td class="col-action">
+                                            <button type="button" class="btn-remove" onclick="removeMaterialRow(1)" disabled>🗑️</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                     
+                        <div class="add-product-section">
+                            <button type="button" class="btn-add-product" onclick="addMaterialRow()">
+                                <span class="add-icon">➕</span>
+                                Add Material
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Remarks</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="remarks">Notes</label>
+                                <textarea id="remarks" name="remarks" rows="4" placeholder="Notes..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+             
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            Submit Material Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+       
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Ready to create material order</span>
+                    <span id="lastSaved">Last saved: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Material Order Submitted</h3>
+                <button class="modal-close" onclick="closeSuccessModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h4>Material Order Created Successfully!</h4>
+                    <div class="order-details">
+                        <p><strong>PO Number:</strong> <span id="generatedPONumber">-</span></p>
+                        <p><strong>Date:</strong> <span id="orderDate">-</span></p>
+                        <p><strong>Total Items:</strong> <span id="modalTotalItems">-</span></p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeSuccessModal()">Close</button>
+                    <button type="button" class="btn-primary" onclick="createNewOrder()">Create New Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/purchasing_material_order_form.js"></script>
+</body>
+</html>

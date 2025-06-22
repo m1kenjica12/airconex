@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Units Inventory - AirconEx</title>
+    <link rel="stylesheet" href="css/warehouse_units_inventory.css">
+</head>
+<body>
+
+    <div class="warehouse-sidebar">
+        <div class="sidebar-header">
+            <h3>Warehouse Department</h3>
+        </div>
+ 
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="warehouse_receiving.html" class="nav-link">
+                <span class="nav-icon">📥</span>
+                <span class="nav-text">Warehouse Receiving</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_dispatch.html" class="nav-link">
+                <span class="nav-icon">🚚</span>
+                <span class="nav-text">Warehouse Dispatch</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a href="warehouse_units_inventory.html" class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Units Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_materials_inventory.html" class="nav-link">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-text">Materials Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_picklist.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pick List</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_delivery_receipt_units.html" class="nav-link">
+                <span class="nav-icon">🧾</span>
+                <span class="nav-text">Delivery Receipt</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Warehouse Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+           
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>UNITS INVENTORY</h1>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Inventory View</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="inventory-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search by brand, model, or type...">
+                        <button class="search-btn" onclick="searchInventory()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <select id="brandFilter" class="filter-select">
+                            <option value="">All Brands</option>
+                        </select>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="">All Types</option>
+                        </select>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="Available">Available</option>
+                            <option value="Order Now">Order Now</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshInventory()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportInventory()">
+                            📤 Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        
+            <div class="inventory-content">
+                <div class="loading-container" id="loadingContainer">
+                    <div class="loading-spinner"></div>
+                    <p>Loading inventory data...</p>
+                </div>
+                
+                <div class="inventory-sections" id="inventorySections" style="display: none;">
+                  
+                </div>
+            </div>
+
+        
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading inventory...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/warehouse_units_inventory.js"></script>
+</body>
+</html>

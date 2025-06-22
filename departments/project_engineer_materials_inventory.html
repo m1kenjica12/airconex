@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Inventory - Project Engineer Department</title>
+    <link rel="stylesheet" href="css/project_engineer_warehouse_inventory.css">
+</head>
+<body>
+    <div class="materials-sidebar">
+        <div class="sidebar-header">
+            <h3>Project Engineer Department</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item ">
+                    <a href="project_engineer_materials_request_form.html" class="nav-link">
+                        <span class="nav-icon">📝</span>
+                        <span class="nav-text">Material Request Form</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="project_engineer_warehouse_inventory.html" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Warehouse Inventory</span>
+                    </a>
+                </li>
+                
+              
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Project Engineer</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="excel-container">
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>WAREHOUSE INVENTORY</h1>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Project Engineer View</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inventory-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search materials...">
+                        <button class="search-btn" onclick="searchInventory()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="MECHANICAL MATERIALS">MECHANICAL MATERIALS</option>
+                            <option value="ELECTRICAL MATERIALS">ELECTRICAL MATERIALS</option>
+                            <option value="PLUMBING MATERIALS">PLUMBING MATERIALS</option>
+                            <option value="CONSUMABLES">CONSUMABLES</option>
+                        </select>
+                        <select id="yearFilter" class="filter-select">
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshInventory()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportInventory()">
+                            📤 Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inventory-content">
+                <div class="loading-container" id="loadingContainer">
+                    <div class="loading-spinner"></div>
+                    <p>Loading warehouse inventory...</p>
+                </div>
+                
+                <div class="inventory-sections" id="inventorySections" style="display: none;">
+                    <div class="table-container">
+                        <table id="inventoryTable" class="excel-table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" class="description-col">DESCRIPTION</th>
+                                    <th rowspan="2" class="small-col">BEG. INV<br>as of Jan 5, 2025</th>
+                                    <th rowspan="2" class="small-col">UOM</th>
+                                    <th rowspan="2" class="small-col">MATERIAL<br>RECEIPT</th>
+                                    <th rowspan="2" class="small-col">MATERIAL<br>ISSUED</th>
+                                    <th rowspan="2" class="small-col">MATERIAL<br>RETURNED</th>
+                                    <th rowspan="2" class="small-col">SCRAP<br>IN</th>
+                                    <th rowspan="2" class="small-col">SCRAP<br>OUT</th>
+                                    <th rowspan="2" class="small-col">RESERVED</th>
+                                    <th rowspan="2" class="small-col">ENDING<br>INV.</th>
+                                    <th colspan="12" class="consumption-header">AVERAGE MONTHLY CONSUMPTION</th>
+                                    <th rowspan="2" class="small-col">UNIT<br>COST</th>
+                                    <th rowspan="2" class="amount-col">AMOUNT</th>
+                                </tr>
+                                <tr>
+                                    <th class="month-col">JAN</th>
+                                    <th class="month-col">FEB</th>
+                                    <th class="month-col">MAR</th>
+                                    <th class="month-col">APR</th>
+                                    <th class="month-col">MAY</th>
+                                    <th class="month-col">JUN</th>
+                                    <th class="month-col">JUL</th>
+                                    <th class="month-col">AUG</th>
+                                    <th class="month-col">SEP</th>
+                                    <th class="month-col">OCT</th>
+                                    <th class="month-col">NOV</th>
+                                    <th class="month-col">DEC</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading materials...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src=

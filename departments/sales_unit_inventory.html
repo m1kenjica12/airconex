@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Inventory - AirconEx</title>
+    <link rel="stylesheet" href="css/sales_unit_inventory.css">
+</head>
+<body>
+
+    <div class="sales-sidebar">
+        <div class="sidebar-header">
+            <h3>Sales Department</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="sales_order_form.html" class="nav-link">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-text">Sales Order Form</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="sales_unit_inventory.html" class="nav-link">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-text">Unit Inventory</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="sales_order_logs.html" class="nav-link">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Sales Logs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Sales Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <div class="excel-container">
+         
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>UNITS INVENTORY</h1>
+                   
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Inventory View</span>
+                    </div>
+                </div>
+            </div>
+
+     
+            <div class="inventory-controls">
+                <div class="control-row">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search by brand, model, or type...">
+                        <button class="search-btn" onclick="searchInventory()">🔍</button>
+                    </div>
+                    <div class="filter-section">
+                        <select id="brandFilter" class="filter-select">
+                            <option value="">All Brands</option>
+                        </select>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="">All Types</option>
+                        </select>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="In Stock">In Stock</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="action-section">
+                        <button class="action-btn refresh-btn" onclick="refreshInventory()">
+                            🔄 Refresh
+                        </button>
+                        <button class="action-btn export-btn" onclick="exportInventory()">
+                            📤 Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+       
+            <div class="inventory-content">
+                <div class="inventory-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalItems">-</div>
+                        <div class="stat-label">Total Items</div>
+                    </div>
+                    <div class="stat-card in-stock">
+                        <div class="stat-number" id="inStockItems">-</div>
+                        <div class="stat-label">In Stock</div>
+                    </div>
+                    <div class="stat-card low-stock">
+                        <div class="stat-number" id="lowStockItems">-</div>
+                        <div class="stat-label">Low Stock</div>
+                    </div>
+                    <div class="stat-card out-stock">
+                        <div class="stat-number" id="outStockItems">-</div>
+                        <div class="stat-label">Out of Stock</div>
+                    </div>
+                </div>
+
+                
+                <div class="table-container">
+                    <table class="inventory-table" id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th class="header-cell col-brand sortable" onclick="sortTable('brand')">
+                                    Brand <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-model sortable" onclick="sortTable('model')">
+                                    Model <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-capacity sortable" onclick="sortTable('horsepower')">
+                                    Capacity (HP) <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-type sortable" onclick="sortTable('unit_type')">
+                                    Type <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-stock sortable" onclick="sortTable('stocks')">
+                                    Stock Quantity <span class="sort-icon">↕</span>
+                                </th>
+                                <th class="header-cell col-status sortable" onclick="sortTable('status')">
+                                    Status <span class="sort-icon">↕</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr class="loading-row">
+                                <td colspan="6" class="loading-cell">
+                                    <div class="loading-spinner"></div>
+                                    Loading inventory data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 items</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prevBtn" onclick="previousPage()" disabled>‹ Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button class="pagination-btn" id="nextBtn" onclick="nextPage()" disabled>Next ›</button>
+                    </div>
+                    <div class="page-size-container">
+                        <label for="pageSize">Items per page:</label>
+                        <select id="pageSize" class="page-size-select" onchange="changePageSize()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+  
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Loading inventory...</span>
+                    <span id="lastUpdated">Last updated: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sales_unit_inventory.js"></script>
+</body>
+</html>

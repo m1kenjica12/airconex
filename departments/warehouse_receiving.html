@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Receiving - AirconEx</title>
+    <link rel="stylesheet" href="css/warehouse_receiving.css">
+</head>
+<body>
+
+    <div class="warehouse-sidebar">
+        <div class="sidebar-header">
+            <h3>Warehouse Department</h3>
+        </div>
+   
+<nav class="sidebar-nav">
+    <ul class="nav-menu">
+        <li class="nav-item active">
+            <a href="warehouse_receiving.html" class="nav-link">
+                <span class="nav-icon">📥</span>
+                <span class="nav-text">Warehouse Receiving</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_dispatch.html" class="nav-link">
+                <span class="nav-icon">🚚</span>
+                <span class="nav-text">Warehouse Dispatch</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_units_inventory.html" class="nav-link">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Units Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_materials_inventory.html" class="nav-link">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-text">Materials Inventory</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_picklist.html" class="nav-link">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pick List</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="warehouse_delivery_receipt_units.html" class="nav-link">
+                <span class="nav-icon">🧾</span>
+                <span class="nav-text">Delivery Receipt</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name">Warehouse Employee</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <span class="logout-icon">🚪</span>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+ 
+    <div class="main-content">
+        <div class="excel-container">
+        
+            <div class="excel-header">
+                <div class="header-content">
+                    <h1>WAREHOUSE RECEIVING FORM</h1>
+                    <p>Receive Purchase Order Items</p>
+                    <div class="header-info">
+                        <span id="currentDate"></span> | <span>Receiving Items</span>
+                    </div>
+                </div>
+            </div>
+
+     
+            <div class="receiving-controls">
+                <div class="control-row">
+                    <div class="back-section">
+                        <button type="button" class="btn-back" onclick="goBack()">
+                            ← Back to Inventory
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+       
+            <div class="form-content">
+                <div class="receiving-content">
+                    <form id="receivingForm" class="receiving-form">
+                        
+                     
+                        <div class="excel-section">
+                            <div class="section-header">
+                                <h3>Purchase Order Selection</h3>
+                            </div>
+                            <table class="po-selection-table">
+                                <tr>
+                                    <th class="header-cell">Purchase Order</th>
+                                </tr>
+                                <tr>
+                                    <td class="required-cell">
+                                        <select id="poSelection" name="poSelection" class="excel-select" required>
+                                            <option value="">Select Purchase Order</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    
+                        <div class="excel-section">
+                            <div class="section-header">
+                                <h3>Purchase Order & Delivery Information</h3>
+                            </div>
+                            <table class="inline-table">
+                                <tr>
+                                    <th class="header-cell col-po-number">PO Number</th>
+                                    <th class="header-cell col-supplier">Supplier</th>
+                                    <th class="header-cell col-dr-number">DR Number</th>
+                                    <th class="header-cell col-dr-date">DR Date</th>
+                                </tr>
+                                <tr>
+                                    <td class="col-po-number">
+                                        <input type="text" id="poNumber" name="poNumber" class="excel-input" readonly>
+                                    </td>
+                                    <td class="col-supplier">
+                                        <input type="text" id="supplier" name="supplier" class="excel-input" readonly>
+                                    </td>
+                                    <td class="col-dr-number required-cell">
+                                        <input type="text" id="drNumber" name="drNumber" class="excel-input" required placeholder="DR-####">
+                                    </td>
+                                    <td class="col-dr-date required-cell">
+                                        <input type="date" id="drDate" name="drDate" class="excel-input" required>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                  
+                        <div class="excel-section" id="itemsSection" style="display: none;">
+                            <div class="section-header">
+                                <h3>Items Receiving & Serial Assignment</h3>
+                                <span class="model-info">Assign serial numbers directly to each item</span>
+                            </div>
+                            <table class="items-serial-table" id="itemsSerialTable">
+                                <thead>
+                                    <tr>
+                                        <th class="header-cell col-unit-desc">Unit Description</th>
+                                        <th class="header-cell col-indoor-model">Indoor Model</th>
+                                        <th class="header-cell col-indoor-serial">Indoor Serial</th>
+                                        <th class="header-cell col-outdoor-model">Outdoor Model</th>
+                                        <th class="header-cell col-outdoor-serial">Outdoor Serial</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="itemsSerialBody">
+                                 
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+      
+            <div class="excel-buttons">
+                <div class="button-group">
+                    <button type="button" class="excel-btn btn-clear" onclick="clearForm()">
+                        Clear Form
+                    </button>
+                    <button type="submit" class="excel-btn btn-submit" form="receivingForm">
+                        Submit All Items
+                    </button>
+                </div>
+            </div>
+
+         
+            <div class="status-bar">
+                <div class="status-info">
+                    <span id="status-text">Ready to receive purchase order items</span>
+                    <span id="lastSaved">Last saved: Never</span>
+                    <span>Version 1.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Items Received Successfully</h3>
+                <button class="modal-close" onclick="closeSuccessModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="success-icon">✅</div>
+                    <h4>All Purchase Order Items Received!</h4>
+                    <p>All items have been successfully received and added to inventory.</p>
+                    <div class="receiving-summary" id="receivingSummary">
+                 
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="excel-btn btn-clear" onclick="closeSuccessModal()">Close</button>
+                    <button type="button" class="excel-btn btn-submit" onclick="receiveAnother()">Receive Another PO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/warehouse_receiving.js"></script>
+</body>
+</html>
