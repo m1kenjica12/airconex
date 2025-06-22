@@ -3,6 +3,8 @@
 * transaction
 *  prepare
 
+https://tunnelmole.com/?utm_source=tunnelmoleNet
+
 CRUD - Medium - LARGE
 NO FRAMEWORKS
 
@@ -18,7 +20,7 @@ multipe units, wrong count frm wh inventory
 assigned serial column, 1st set of serials gets stored from db received_serial
 
 features to be added: 
-1. login
+1. login - role based.
 2. log out
 3. materials receiving frm purchasing dept // prioritize
 4. finish project engineer dept. check process flow. // prioritize
