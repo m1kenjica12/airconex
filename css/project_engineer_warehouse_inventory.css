@@ -1,0 +1,814 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: #f5f5f5;
+    color: #2c3e50;
+    display: flex;
+}
+
+/* Materials Department Sidebar with Scrolling */
+.materials-sidebar {
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+    flex-shrink: 0;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #3498db #2c3e50; /* For Firefox */
+}
+
+/* Custom Scrollbar for Sidebar */
+.materials-sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.materials-sidebar::-webkit-scrollbar-track {
+    background: #2c3e50;
+    border-radius: 4px;
+}
+
+.materials-sidebar::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.materials-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.sidebar-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar-nav {
+    flex: 1; /* Take up available space */
+    overflow-y: auto; /* Allow scrolling in nav area */
+    padding: 10px 0;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 2px 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    position: relative;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-item.active .nav-link {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-right: 3px solid #3498db;
+}
+
+.nav-icon {
+    font-size: 16px;
+    margin-right: 12px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.nav-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 10px;
+}
+
+.user-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.logout-btn {
+    width: 100%;
+    background: #e74c3c;
+    color: white;
+    border: 1px solid #c0392b;
+    padding: 8px 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    border-color: #a93226;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.logout-btn .logout-icon {
+    font-size: 12px;
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+/* Excel Container */
+.excel-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+.excel-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid #2c3e50;
+    flex-shrink: 0;
+}
+
+.header-content h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.header-info {
+    font-size: 12px;
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+/* Inventory Controls */
+.inventory-controls {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e8eaed;
+    padding: 12px 20px;
+    flex-shrink: 0;
+}
+
+.control-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-section {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-input {
+    width: 300px;
+    height: 32px;
+    padding: 6px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.search-btn {
+    height: 32px;
+    width: 40px;
+    background: #34495e;
+    color: white;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-btn:hover {
+    background: #2c3e50;
+}
+
+.filter-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-select {
+    height: 32px;
+    padding: 6px 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-width: 120px;
+}
+
+.action-section {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.action-btn {
+    height: 32px;
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+}
+
+.refresh-btn {
+    color: #27ae60;
+    border-color: #27ae60;
+}
+
+.export-btn {
+    color: #2980b9;
+    border-color: #2980b9;
+}
+
+.add-btn {
+    color: #8e44ad;
+    border-color: #8e44ad;
+}
+
+/* Inventory Content - Fixed Height */
+.inventory-content {
+    flex: 1;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Table Container with Fixed Height and Scrolling */
+.table-container {
+    flex: 1;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    height: calc(100vh - 220px); /* Fixed height based on header and controls */
+    border-top: 1px solid #e8eaed;
+}
+
+/* Custom Scrollbar for Table Container */
+.table-container::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 6px;
+    border: 2px solid #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+.table-container::-webkit-scrollbar-corner {
+    background: #f1f1f1;
+}
+
+/* Firefox Scrollbar */
+.table-container {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #7f8c8d;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ecf0f1;
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Excel Table Styles with Sticky Header */
+.excel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.excel-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+.excel-table th {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    color: white;
+    padding: 10px 6px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+    border: 1px solid #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    position: sticky;
+    top: 0;
+    z-index: 11;
+}
+
+.excel-table td {
+    padding: 8px 6px;
+    text-align: center;
+    border: 1px solid #bdc3c7;
+    vertical-align: middle;
+    background: white;
+    font-size: 10px;
+}
+
+.excel-table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.excel-table tbody tr:hover {
+    background: #e3f2fd;
+    transition: background-color 0.2s ease;
+}
+
+/* Column Widths */
+.description-col {
+    width: 300px;
+    text-align: left !important;
+    min-width: 300px;
+}
+
+.small-col {
+    width: 80px;
+    min-width: 80px;
+}
+
+.month-col {
+    width: 60px;
+    min-width: 60px;
+}
+
+.actions-col {
+    width: 120px;
+    min-width: 120px;
+}
+
+.consumption-header {
+    background: #e3f2fd !important;
+    color: #1976d2 !important;
+}
+
+/* Category Row */
+.category-row {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    border: 1px solid #34495e !important;
+}
+
+/* Input cells */
+.editable-cell {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 4px;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+}
+
+.editable-cell:focus {
+    outline: 2px solid #3498db;
+    background: #f0f8ff;
+}
+
+/* Status indicators */
+.low-stock {
+    background: #fff3cd !important;
+    color: #856404;
+}
+
+.out-of-stock {
+    background: #f8d7da !important;
+    color: #721c24;
+}
+
+/* Action buttons */
+.btn-action {
+    padding: 4px 8px;
+    margin: 2px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.btn-edit {
+    background: #28a745;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-action:hover {
+    opacity: 0.8;
+}
+
+/* Status Bar - Fixed at Bottom */
+.status-bar {
+    background: #34495e;
+    color: white;
+    padding: 8px 20px;
+    font-size: 10px;
+    border-top: 1px solid #2c3e50;
+    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    left: 220px; /* Account for sidebar width */
+    right: 0;
+    z-index: 100;
+}
+
+.status-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+}
+
+.status-info span {
+    opacity: 0.9;
+}
+
+/* Adjust main content for fixed status bar */
+.main-content {
+    padding-bottom: 40px; /* Space for fixed status bar */
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 8px;
+    width: 600px;
+    max-width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: white;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgba(255,255,255,0.8);
+}
+
+.close:hover {
+    color: white;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-secondary {
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Amount Column Specific Styling */
+.amount-col {
+    width: 100px;
+    min-width: 100px;
+    text-align: right;
+    padding-right: 8px !important;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ensure amount values don't break or wrap */
+.amount-value {
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .materials-sidebar {
+        width: 200px;
+    }
+    
+    .status-bar {
+        left: 200px; /* Adjust for smaller sidebar */
+    }
+    
+    .control-row {
+        gap: 10px;
+    }
+    
+    .search-input {
+        width: 250px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        padding: 8px;
+        padding-bottom: 50px;
+    }
+    
+    .excel-table {
+        font-size: 10px;
+    }
+    
+    .excel-table th,
+    .excel-table td {
+        padding: 6px 4px;
+        font-size: 9px;
+    }
+    
+    .table-container {
+        height: calc(100vh - 200px);
+    }
+}
+
+@media (max-width: 768px) {
+    .materials-sidebar {
+        width: 180px;
+    }
+    
+    .status-bar {
+        left: 180px;
+    }
+    
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .search-input {
+        width: 100%;
+    }
+    
+    .filter-section,
+    .action-section {
+        justify-content: center;
+    }
+    
+    .table-container {
+        height: calc(100vh - 180px);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .materials-sidebar,
+    .inventory-controls,
+    .status-bar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .excel-table {
+        font-size: 8px;
+    }
+    
+    .excel-table th,
+    .excel-table td {
+        padding: 4px 2px;
+        font-size: 7px;
+    }
+}
+
+/* Smooth Scrolling */
+.materials-sidebar,
+.table-container {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+.nav-link:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+.logout-btn:focus {
+    outline: 2px solid #e74c3c;
+    outline-offset: 2px;
+}

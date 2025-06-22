@@ -1,0 +1,798 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: #f5f5f5;
+    color: #2c3e50;
+    display: flex;
+}
+
+.warehouse-sidebar {
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 10px 0;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 2px 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-item.active .nav-link {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-right: 3px solid #3498db;
+}
+
+.nav-icon {
+    font-size: 16px;
+    margin-right: 12px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.nav-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 10px;
+}
+
+.user-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.logout-btn {
+    width: 100%;
+    background: #e74c3c;
+    color: white;
+    border: 1px solid #c0392b;
+    padding: 8px 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    border-color: #a93226;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.logout-btn .logout-icon {
+    font-size: 12px;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.excel-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.excel-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 10px 16px;
+    border-bottom: 1px solid #2c3e50;
+    flex-shrink: 0;
+}
+
+.header-content h1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    letter-spacing: 0.3px;
+}
+
+.header-content p {
+    font-size: 11px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+
+.header-info {
+    font-size: 9px;
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+.receiving-controls {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e8eaed;
+    padding: 8px 16px;
+    flex-shrink: 0;
+}
+
+.control-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.back-section {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.btn-back {
+    height: 28px;
+    padding: 4px 10px;
+    background: #95a5a6;
+    color: white;
+    border: 1px solid #7f8c8d;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+    background: #7f8c8d;
+    transform: translateY(-1px);
+}
+
+
+.form-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+}
+
+
+.receiving-content {
+    flex: 1;
+    overflow-y: auto;
+    background: #ffffff;
+    scrollbar-width: thin;
+    scrollbar-color: #bdc3c7 #ecf0f1;
+    padding: 16px;
+}
+
+.receiving-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.receiving-content::-webkit-scrollbar-track {
+    background: #ecf0f1;
+}
+
+.receiving-content::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 4px;
+}
+
+.receiving-content::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
+
+
+.excel-section {
+    margin-bottom: 16px;
+    border: 1px solid #e8eaed;
+    border-radius: 6px;
+    overflow: hidden;
+    background: white;
+}
+
+.section-header {
+    background: #f8f9fa;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e8eaed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.model-info {
+    font-size: 9px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+
+.po-selection-table,
+.inline-table,
+.items-serial-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+    background: #ffffff;
+    table-layout: fixed;
+}
+
+.po-selection-table th,
+.inline-table th,
+.items-serial-table th {
+    background: #34495e;
+    color: white;
+    border: 1px solid #2c3e50;
+    padding: 6px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 8px;
+    line-height: 1.2;
+    height: 32px;
+    vertical-align: middle;
+}
+
+.po-selection-table td,
+.inline-table td,
+.items-serial-table td {
+    border: 1px solid #e8eaed;
+    padding: 4px;
+    vertical-align: middle;
+    background: #ffffff;
+    height: 32px;
+    line-height: 1.2;
+}
+
+.po-selection-table tbody tr:nth-child(even),
+.inline-table tbody tr:nth-child(even),
+.items-serial-table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.po-selection-table tbody tr:hover,
+.inline-table tbody tr:hover,
+.items-serial-table tbody tr:hover {
+    background: #e3f2fd;
+    box-shadow: inset 0 0 0 1px #2196f3;
+}
+
+
+.items-serial-table .col-unit-desc { width: 35%; }
+.items-serial-table .col-indoor-model { width: 15%; }
+.items-serial-table .col-indoor-serial { width: 17%; }
+.items-serial-table .col-outdoor-model { width: 15%; }
+.items-serial-table .col-outdoor-serial { width: 18%; }
+
+
+.inline-table .col-po-number { width: 20%; }
+.inline-table .col-supplier { width: 20%; }
+.inline-table .col-dr-number { width: 20%; }
+.inline-table .col-dr-date { width: 20%; }
+.inline-table .col-received-by { width: 20%; }
+
+
+.excel-input,
+.excel-select {
+    width: 100%;
+    padding: 4px 6px;
+    border: 1px solid #bdc3c7;
+    font-size: 9px;
+    font-weight: 500;
+    background: #ffffff;
+    color: #2c3e50;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.excel-input:focus,
+.excel-select:focus {
+    outline: none;
+    border: 2px solid #3498db;
+    margin: -1px;
+    box-shadow: 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.excel-input[readonly] {
+    background: #f8f9fa;
+    color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+
+.required-cell {
+    background: #fff9e6 !important;
+    border-left: 3px solid #f39c12 !important;
+}
+
+
+.serial-input {
+    width: 100%;
+    padding: 4px 6px;
+    border: 2px solid #3498db;
+    font-size: 9px;
+    font-weight: 600;
+    background: #ffffff;
+    color: #2c3e50;
+    transition: all 0.2s ease;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+
+.serial-input:focus {
+    outline: none;
+    border: 2px solid #2980b9;
+    background: #f8f9fa;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.serial-input:valid {
+    border-color: #27ae60;
+    background: #f0f9f0;
+}
+
+.serial-input::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+
+.condition-select {
+    width: 100%;
+    padding: 4px 6px;
+    border: 2px solid #f39c12;
+    font-size: 9px;
+    font-weight: 600;
+    background: #ffffff;
+    color: #2c3e50;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.condition-select:focus {
+    outline: none;
+    border: 2px solid #e67e22;
+    background: #fef9e7;
+}
+
+
+.item-unit-desc {
+    font-weight: 600;
+    color: #2c3e50;
+    background: #f8f9fa;
+    border-left: 3px solid #3498db;
+    padding: 6px 8px;
+}
+
+.item-model-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    padding: 6px 4px;
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.indoor-model-display {
+    color: #27ae60;
+    background: #f0f9f0;
+}
+
+.outdoor-model-display {
+    color: #e74c3c;
+    background: #fff5f5;
+}
+
+
+.items-serial-table tbody tr.completed {
+    background: #d5f4e6 !important;
+    border-left: 4px solid #27ae60;
+}
+
+.items-serial-table tbody tr.incomplete {
+    background: #fff3cd !important;
+    border-left: 4px solid #ffc107;
+}
+
+
+.required-field {
+    border-color: #e74c3c !important;
+    background: #fdf2f2 !important;
+}
+
+.valid-field {
+    border-color: #27ae60 !important;
+    background: #f0f9f0 !important;
+}
+
+
+#itemsSection {
+    animation: expandSection 0.3s ease-in-out;
+}
+
+@keyframes expandSection {
+    from { 
+        opacity: 0; 
+        transform: translateY(-10px);
+        max-height: 0;
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+        max-height: 1000px;
+    }
+}
+
+
+.excel-buttons {
+    background: #f8f9fa;
+    border-top: 1px solid #e8eaed;
+    padding: 10px 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.excel-btn {
+    padding: 6px 14px;
+    background: #ffffff;
+    border: 1px solid #bdc3c7;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 90px;
+}
+
+.excel-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn-submit {
+    background: #2980b9;
+    color: white;
+    border: 1px solid #2471a3;
+}
+
+.btn-submit:hover {
+    background: #2471a3;
+}
+
+.btn-submit:disabled {
+    background: #7f8c8d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-clear {
+    background: #ecf0f1;
+    color: #7f8c8d;
+    border: 1px solid #bdc3c7;
+}
+
+.btn-clear:hover {
+    background: #d5dbdb;
+    color: #5d6d7e;
+}
+
+
+.status-bar {
+    background: #34495e;
+    color: white;
+    padding: 5px 16px;
+    font-size: 8px;
+    border-top: 1px solid #2c3e50;
+    flex-shrink: 0;
+}
+
+.status-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+}
+
+.status-info span {
+    opacity: 0.9;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90%;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid #34495e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.success-message {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.success-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.success-message h4 {
+    color: #27ae60;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.success-message p {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.receiving-summary {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.summary-item {
+    margin: 8px 0;
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 3px;
+    border-left: 4px solid #27ae60;
+    font-size: 11px;
+}
+
+.summary-item strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e8eaed;
+}
+
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+
+@media (max-width: 1400px) {
+    .main-content {
+        padding: 8px;
+    }
+    
+    .control-row {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        padding: 5px;
+    }
+    
+    .items-serial-table {
+        font-size: 8px;
+    }
+    
+    .receiving-content {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .warehouse-sidebar {
+        width: 180px;
+    }
+    
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .excel-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .items-serial-table {
+        font-size: 7px;
+        min-width: 800px;
+    }
+    
+    .items-serial-table th {
+        padding: 4px 2px;
+        font-size: 7px;
+    }
+    
+    .items-serial-table td {
+        padding: 3px 2px;
+        height: 28px;
+    }
+    
+    .receiving-content {
+        padding: 8px;
+        overflow-x: auto;
+    }
+}

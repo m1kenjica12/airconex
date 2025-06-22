@@ -1,0 +1,1017 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: #f5f5f5;
+    color: #2c3e50;
+    display: flex;
+}
+
+.sales-sidebar {
+    width: 220px;
+    height: 100vh;
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 10px 0;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 2px 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 0;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-item.active .nav-link {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-right: 3px solid #3498db;
+}
+
+.nav-icon {
+    font-size: 16px;
+    margin-right: 12px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.nav-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 10px;
+}
+
+.user-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.logout-btn {
+    width: 100%;
+    background: #e74c3c;
+    color: white;
+    border: 1px solid #c0392b;
+    padding: 8px 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    border-color: #a93226;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.logout-btn .logout-icon {
+    font-size: 12px;
+}
+
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+
+.excel-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid #d5d8dc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dr-header {
+    background: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #e8eaed;
+    flex-shrink: 0;
+}
+
+.header-title h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.dr-controls {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e8eaed;
+    padding: 15px 20px;
+    flex-shrink: 0;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.so-section {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.so-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+
+.so-input {
+    height: 36px;
+    padding: 8px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-width: 200px;
+}
+
+.load-btn, .print-btn {
+    height: 36px;
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.load-btn {
+    background: linear-gradient(135deg, #27ae60, #219a52);
+    color: white;
+    border-color: #27ae60;
+}
+
+.load-btn:hover {
+    background: linear-gradient(135deg, #219a52, #1e8449);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.print-btn {
+    background: #ffffff;
+    color: #2980b9;
+    border-color: #2980b9;
+}
+
+.print-btn:hover {
+    background: #ebf3fd;
+    transform: translateY(-1px);
+}
+
+
+.dr-content {
+    flex: 1;
+    overflow: auto;
+    padding: 0;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #7f8c8d;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ecf0f1;
+    border-radius: 50%;
+    border-top-color: #3498db;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+.empty-dr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 300px;
+    padding: 40px;
+}
+
+.empty-message {
+    text-align: center;
+    color: #7f8c8d;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    display: block;
+    opacity: 0.6;
+}
+
+.empty-message h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.empty-message p {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+
+.dr-form-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dr-form {
+    background: white;
+    border: 2px solid #000;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+
+.company-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid #000;
+    position: relative;
+    min-height: 80px;
+}
+
+.company-logo {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    width: 80px;
+}
+
+.company-info {
+    margin-left: 100px;
+    margin-right: 200px;
+}
+
+.company-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 2px 0;
+    color: #000;
+}
+
+.company-tagline {
+    font-size: 12px;
+    margin: 0 0 5px 0;
+    color: #000;
+    font-weight: bold;
+}
+
+.company-address {
+    font-size: 8px;
+    margin: 0;
+    line-height: 1.3;
+    color: #000;
+}
+
+.company-contact {
+    font-size: 8px;
+    margin: 2px 0 0 0;
+    color: #000;
+}
+
+
+.dr-title-section {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    text-align: right;
+}
+
+.dr-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+    color: #000;
+}
+
+.dr-number {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+}
+
+
+.dr-details {
+    padding: 15px 20px;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    min-height: 20px;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: bold;
+    min-width: 120px;
+    margin-right: 10px;
+    font-size: 11px;
+    color: #000;
+}
+
+.detail-value {
+    border-bottom: 1px solid #000;
+    min-height: 16px;
+    flex: 1;
+    padding: 2px 5px;
+    font-size: 11px;
+    color: #000;
+}
+
+
+.items-section {
+    padding: 15px 20px;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+}
+
+.items-table thead th {
+    background: white;
+    border: 1px solid #000;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 11px;
+    color: #000;
+    text-align: center;
+}
+
+.items-table .col-number {
+    width: 5%;
+    text-align: center;
+}
+
+.items-table .col-description {
+    width: 50%;
+    text-align: left;
+    padding-left: 8px;
+}
+
+.items-table .col-serial {
+    width: 25%;
+    text-align: center;
+}
+
+.items-table .col-qty {
+    width: 20%;
+    text-align: center;
+}
+
+.items-table tbody td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+    font-size: 10px;
+    color: #000;
+    vertical-align: middle;
+}
+
+.item-number {
+    text-align: center;
+}
+
+.item-description {
+    text-align: left;
+    padding-left: 8px;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.item-serial {
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+.item-qty {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+.nothing-follows {
+    text-align: center;
+    padding: 15px;
+    font-size: 12px;
+    color: #000;
+    font-weight: bold;
+}
+
+
+.empty-space {
+    height: 200px;
+}
+
+
+.signatures-section {
+    padding: 20px;
+    border-top: 1px solid #000;
+}
+
+.signature-row {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.signature-row:last-child {
+    margin-bottom: 0;
+}
+
+.signature-field {
+    flex: 1;
+    text-align: left;
+}
+
+.signature-field label {
+    font-weight: bold;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.prepared-by {
+    font-weight: bold;
+    font-size: 11px;
+    color: #000;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.signature-line {
+    border-bottom: 1px solid #000;
+    height: 30px;
+    margin-bottom: 3px;
+}
+
+.signature-label {
+    font-size: 9px;
+    font-style: italic;
+    color: #000;
+    text-align: center;
+    display: block;
+}
+
+
+.copy-info {
+    text-align: center;
+    font-size: 9px;
+    font-weight: normal;
+    padding: 10px 20px;
+    background: white;
+    color: #000;
+}
+
+.copy-info p {
+    margin: 0;
+}
+
+.status-bar {
+    background: #34495e;
+    color: white;
+    padding: 8px 20px;
+    font-size: 10px;
+    border-top: 1px solid #2c3e50;
+    flex-shrink: 0;
+}
+
+.status-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+}
+
+.status-info span {
+    opacity: 0.9;
+}
+
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0.25in;
+    }
+    
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .sales-sidebar,
+    .dr-controls,
+    .status-bar,
+    .dr-header {
+        display: none !important;
+    }
+    
+    html, body {
+        background: white !important;
+        color: black !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 9px !important;
+        line-height: 1.1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+    
+    body {
+        display: block !important;
+    }
+    
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: none !important;
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+    }
+    
+    .excel-container {
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    
+    .dr-content {
+        overflow: visible !important;
+        height: auto !important;
+        padding: 0 !important;
+        flex: none !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    .dr-form-container {
+        padding: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+    
+    .dr-form {
+        border: 2px solid black !important;
+        background: white !important;
+        color: black !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 9px !important;
+        line-height: 1.1 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .company-header {
+        border-bottom: 2px solid black !important;
+        padding: 8px 15px !important;
+        position: relative !important;
+        min-height: 60px !important;
+        background: white !important;
+    }
+    
+    .company-logo {
+        position: absolute !important;
+        left: 15px !important;
+        top: 8px !important;
+        width: 60px !important;
+    }
+    
+    .company-info {
+        margin-left: 80px !important;
+        margin-right: 150px !important;
+    }
+    
+    .company-name {
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: black !important;
+        margin: 0 0 1px 0 !important;
+    }
+    
+    .company-tagline {
+        font-size: 10px !important;
+        font-weight: bold !important;
+        color: black !important;
+        margin: 0 0 3px 0 !important;
+    }
+    
+    .company-address {
+        font-size: 7px !important;
+        color: black !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+    }
+    
+    .company-contact {
+        font-size: 7px !important;
+        color: black !important;
+        margin: 1px 0 0 0 !important;
+    }
+    
+    .dr-title-section {
+        position: absolute !important;
+        top: 8px !important;
+        right: 15px !important;
+        text-align: right !important;
+    }
+    
+    .dr-title {
+        font-size: 14px !important;
+        font-weight: bold !important;
+        color: black !important;
+        letter-spacing: 1px !important;
+        margin: 0 0 3px 0 !important;
+    }
+    
+    .dr-number {
+        font-size: 12px !important;
+        font-weight: bold !important;
+        color: black !important;
+        margin: 0 !important;
+    }
+    
+    .dr-details {
+        padding: 8px 15px !important;
+        background: white !important;
+    }
+    
+    .detail-row {
+        display: flex !important;
+        align-items: center !important;
+        margin-bottom: 4px !important;
+        min-height: 14px !important;
+    }
+    
+    .detail-label {
+        font-weight: bold !important;
+        font-size: 9px !important;
+        color: black !important;
+        min-width: 100px !important;
+        margin-right: 8px !important;
+    }
+    
+    .detail-value {
+        border-bottom: 1px solid black !important;
+        min-height: 12px !important;
+        flex: 1 !important;
+        padding: 1px 3px !important;
+        font-size: 9px !important;
+        color: black !important;
+    }
+    
+    .items-section {
+        padding: 8px 15px !important;
+        background: white !important;
+    }
+    
+    .items-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        border: 1px solid black !important;
+    }
+    
+    .items-table thead th {
+        background: white !important;
+        border: 1px solid black !important;
+        padding: 4px !important;
+        font-weight: bold !important;
+        font-size: 9px !important;
+        color: black !important;
+        text-align: center !important;
+    }
+    
+    .items-table .col-number {
+        width: 5% !important;
+    }
+    
+    .items-table .col-description {
+        width: 50% !important;
+        text-align: left !important;
+        padding-left: 6px !important;
+    }
+    
+    .items-table .col-serial {
+        width: 25% !important;
+        text-align: center !important;
+    }
+    
+    .items-table .col-qty {
+        width: 20% !important;
+        text-align: center !important;
+    }
+    
+    .items-table tbody td {
+        border: 1px solid black !important;
+        padding: 3px 4px !important;
+        font-size: 8px !important;
+        color: black !important;
+        vertical-align: middle !important;
+    }
+    
+    .item-number {
+        text-align: center !important;
+    }
+    
+    .item-description {
+        text-align: left !important;
+        padding-left: 4px !important;
+        font-size: 8px !important;
+        line-height: 1.2 !important;
+    }
+    
+    .item-serial {
+        text-align: center !important;
+        font-size: 8px !important;
+        line-height: 1.2 !important;
+    }
+    
+    .item-qty {
+        text-align: center !important;
+        font-size: 8px !important;
+        line-height: 1.2 !important;
+    }
+    
+    .nothing-follows {
+        text-align: center !important;
+        padding: 8px !important;
+        font-size: 10px !important;
+        color: black !important;
+        font-weight: bold !important;
+        background: white !important;
+    }
+    
+    .empty-space {
+        height: 80px !important;
+        background: white !important;
+    }
+    
+    .signatures-section {
+        padding: 10px 15px !important;
+        border-top: 1px solid black !important;
+        background: white !important;
+    }
+    
+    .signature-row {
+        display: flex !important;
+        gap: 30px !important;
+        margin-bottom: 25px !important;
+    }
+    
+    .signature-field {
+        flex: 1 !important;
+        text-align: left !important;
+    }
+    
+    .signature-field label {
+        font-weight: bold !important;
+        font-size: 9px !important;
+        color: black !important;
+        display: block !important;
+        margin-bottom: 3px !important;
+    }
+    
+    .prepared-by {
+        font-weight: bold !important;
+        font-size: 9px !important;
+        color: black !important;
+        margin-bottom: 5px !important;
+        text-align: center !important;
+    }
+    
+    .signature-line {
+        border-bottom: 1px solid black !important;
+        height: 20px !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .signature-label {
+        font-size: 7px !important;
+        font-style: italic !important;
+        color: black !important;
+        text-align: center !important;
+        display: block !important;
+    }
+    
+    .copy-info {
+        text-align: center !important;
+        font-size: 7px !important;
+        color: black !important;
+        padding: 5px 15px !important;
+        background: white !important;
+        margin: 0 !important;
+    }
+    
+    .copy-info p {
+        margin: 0 !important;
+        color: black !important;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .so-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .company-logo {
+        position: static;
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+    
+    .company-info {
+        margin: 0;
+        text-align: center;
+    }
+    
+    .dr-title-section {
+        position: static;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .signature-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sales-sidebar {
+        width: 180px;
+    }
+    
+    .dr-form {
+        font-size: 10px;
+    }
+    
+    .company-name {
+        font-size: 18px;
+    }
+    
+    .dr-title {
+        font-size: 16px;
+    }
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bdc3c7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
